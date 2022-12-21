@@ -1,8 +1,3 @@
-"""
-@todo
-Reguly w razie remisu powinny zwracac None
-"""
-
 def highest_card_wins(players: list):  
   highest_cards = [player.highest_card() for player in players]
   draw = all(hc == highest_cards[0] for hc in highest_cards)

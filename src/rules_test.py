@@ -1,11 +1,12 @@
 import unittest
 import core.rules as rules
 from core.player import Player
-from core.card import Card
-from core.color import Color
 from core.utils import generate_shuffled_deck, get_card_by_color_and_number
 
-
+"""
+@todo
+testy dla wszystkich rules
+"""
 class TestRules(unittest.TestCase):
   def __init__(self, *args, **kwargs):
     self.deck = generate_shuffled_deck()
