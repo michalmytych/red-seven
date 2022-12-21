@@ -1,7 +1,7 @@
-from core.helpers import generate_shuffled_deck
+from core.utils import generate_shuffled_deck
 
 class Game:
-  def __init__(self, id):
+  def __init__(self, id: int):
     self.id = id        
     self.offset = []
     self.players = []
