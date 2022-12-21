@@ -1,4 +1,4 @@
-from helpers import generate_shuffled_deck
+from core.helpers import generate_shuffled_deck
 
 class Game:
   def __init__(self, id):

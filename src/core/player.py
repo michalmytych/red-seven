@@ -1,4 +1,4 @@
-from helpers import random_pop
+from core.helpers import random_pop
 
 class Player:
   def __init__(self, id, cards):
