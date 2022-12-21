@@ -4,7 +4,11 @@ Reguly w razie remisu powinny zwracac None
 """
 
 def highest_card_wins(players: list):  
-  return max(players, key = lambda player: max(player.palette))
+  highest_cards = [player.highest_card() for player in players]
+  draw = all(hc == highest_cards[0] for hc in highest_cards)
+  if draw:
+    return None
+  return max(players, key = lambda player: player.highest_card())
  
 
 def most_of_one_number_wins(players: list):

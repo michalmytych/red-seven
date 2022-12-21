@@ -27,3 +27,6 @@ class Card:
     number_is_bigger = self.number > card.number
     color_is_bigger = self.color > card.color
     return number_is_bigger or (self.number == card.number and color_is_bigger)
+
+  def of_values(self, number: int, color_name: str):
+    return self.number == number and self.color.name == color_name

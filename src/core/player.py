@@ -21,5 +21,8 @@ class Player:
   def change_rule(self, card: Card):
     pass
 
+  def highest_card(self):
+    return max(self.palette)
+
   def play_to_palette_and_change_rule(self, to_palette: Card, to_rule: Card):
     pass
