@@ -1,6 +1,7 @@
 # Klasy
 
 - Reguła()
+  - ewaluuj(gracze[]): gracze[]
 ___
 - Kolor(wartość, nazwa, reguła)
   - czy_mocniejszy_od(kolor): bool
@@ -15,7 +16,8 @@ ___
   - zmień_regułę(karta)
   - zagraj_do_palety_i_zmień_regułę(karta_do_palety, karta_reguły)
 ___
-- Gra()
+- Gra(id)
+  - _gracze (Lista)_
   - _stos_dobierania (Stos)_
   - _tło (Stos)_
   - _aktywny_gracz (Gracz)_
