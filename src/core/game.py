@@ -1,5 +1,6 @@
 from core.utils import generate_shuffled_deck
 
+
 class Game:
   def __init__(self, id: int):
     self.id = id        

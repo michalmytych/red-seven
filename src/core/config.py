@@ -1,5 +1,6 @@
 import core.rules as rules
 
+
 VERSION = "1.2"
 
 COLORS = (

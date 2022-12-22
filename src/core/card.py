@@ -1,5 +1,6 @@
 from core.color import Color
 
+
 class Card:
   def __init__(self, number: int, color: Color):
     self.number = number

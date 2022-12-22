@@ -1,5 +1,6 @@
 import core.helpers as helpers
 
+
 def highest_card_wins(players: list):  
   highest_cards = [player.highest_card() for player in players]
   draw = helpers.all_in_list_same(highest_cards)

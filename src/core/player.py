@@ -1,8 +1,9 @@
 from core.utils import random_pop
 from core.card import Card
 
+
 class Player:
-  def __init__(self, id: int, cards: list = [], palette = []):
+  def __init__(self, id: int, cards: list = [], palette: list = []):
     self.id = id
     self.palette = palette if len(palette) != 0 else [random_pop(cards)]
     self.hand = cards
