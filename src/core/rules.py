@@ -17,9 +17,10 @@ def most_of_one_number_wins(players: list):
     players_cards_numbers.append(player_with_cards)
   counts = []
   for player_with_cards in players_cards_numbers:
-    counts_dict = dict()
-    counts_dict["counts"] = helpers.get_items_count_dict(player_with_cards["cards"])
-    counts_dict["player_id"] = player_with_cards["player_id"]
+    counts_dict = {
+      "counts": helpers.get_items_count_dict(player_with_cards["cards"]),
+      "player_id": player_with_cards["player_id"]
+    }
     counts.append(counts_dict)
   max_counts = list(map(lambda pc: max(list(pc["counts"].values())), counts))
   draw = helpers.all_in_list_same(max_counts)
