@@ -25,8 +25,6 @@ def most_of_one_number_wins(players: list):
     return None
   max_count = max(counts, key = lambda pc: max(list(pc["counts"].values())))
   winners = list(filter(lambda p: p.id == max_count["player_id"], players))
-  if len(winners) != 1:
-    return None
   return winners[0]
 
 
