@@ -2,19 +2,13 @@ import core.helpers as helpers
 
 def highest_card_wins(players: list):  
   highest_cards = [player.highest_card() for player in players]
-  draw = all(hc == highest_cards[0] for hc in highest_cards)
+  draw = helpers.all_in_list_same(highest_cards)
   if draw:
     return None
   return max(players, key = lambda player: player.highest_card())
  
 
 def most_of_one_number_wins(players: list):
-  """
-    @todo
-    na ten moment sprawdza po distinct ale powinno patrzeć zawsze na powtórzenia jednego numeru
-    bo np (1,1,2,2,3) wygra nad (3,4,4,4,5) bo porówna len([1, 2]) z len([4]) a powinien wygrac
-    ten drugi bo u niego powtarza sie 4 az 3 razy
-  """
   players_cards_numbers = []
   for player in players:
     cards = [card.number for card in player.palette]
@@ -26,19 +20,11 @@ def most_of_one_number_wins(players: list):
     counts_dict["counts"] = helpers.get_items_count_dict(player_with_cards["cards"])
     counts_dict["player_id"] = player_with_cards["player_id"]
     counts.append(counts_dict)
-  max_values = list(map(lambda pc: max(pc["counts"]), counts))
-
-  print(max_values)
-  print(counts)
-  # dotąd jest git
-
-  if len(set(max_values)) > 1:
-    print('None')
+  max_counts = list(map(lambda pc: max(list(pc["counts"].values())), counts))
+  if helpers.all_in_list_same(max_counts):
     return None
   max_count = max(counts, key = lambda pc: max(list(pc["counts"].values())))
   winners = list(filter(lambda p: p.id == max_count["player_id"], players))
-  print(max_count)
-  print(winners)
   if len(winners) != 1:
     return None
   return winners[0]
