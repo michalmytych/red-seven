@@ -27,10 +27,18 @@ def most_of_one_number_wins(players: list):
     counts_dict["player_id"] = player_with_cards["player_id"]
     counts.append(counts_dict)
   max_values = list(map(lambda pc: max(pc["counts"]), counts))
+
+  print(max_values)
+  print(counts)
+  # dotąd jest git
+
   if len(set(max_values)) > 1:
+    print('None')
     return None
-  max_count = max(counts, key = lambda pc: max(pc["counts"]))
+  max_count = max(counts, key = lambda pc: max(list(pc["counts"].values())))
   winners = list(filter(lambda p: p.id == max_count["player_id"], players))
+  print(max_count)
+  print(winners)
   if len(winners) != 1:
     return None
   return winners[0]

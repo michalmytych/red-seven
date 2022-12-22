@@ -2,12 +2,11 @@ from core.utils import random_pop
 from core.card import Card
 
 class Player:
-  def __init__(self, id: int, cards: list):
+  def __init__(self, id: int, cards: list = [], palette = []):
     self.id = id
-    # self.palette = [random_pop(cards)]  - poprawnie
-    self.palette = cards # do testów
+    self.palette = palette if len(palette) != 0 else [random_pop(cards)]
     self.hand = cards
-    self.representation = f'Player id: {self.id}, palette: {self.palette}'
+    self.representation = f'(Player id: {self.id}, palette: {self.palette})'
 
   def __str__(self):
     return self.representation
