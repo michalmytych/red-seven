@@ -32,6 +32,19 @@ def most_of_one_number_wins(players: list):
 
 def most_of_one_color_wins(players: list):
   get_player_cards_colors = lambda player: [card.color.strength for card in player.palette]
+  players_colors_counts = []
+  for player in players:
+    player_colors = get_player_cards_colors(player)
+    players_colors_counts.append({
+      "player_id": player.id,
+      "counts": helpers.get_items_count_dict(player_colors)
+    })
+  maxes = lambda pcc: {"player_id": pcc["player_id"], "max": max(list(pcc["counts"].values()))} 
+  max_counts_players = [maxes(pcc) for pcc in players_colors_counts]  
+  max_counts = [mcp["max"] for mcp in max_counts_players]
+  draw = helpers.all_in_list_same(max_counts)
+  if draw:
+    return None
   get_count_of_unique_cards = lambda player: len(set(get_player_cards_colors(player)))
   return min(players, key = lambda player: get_count_of_unique_cards(player))
 
