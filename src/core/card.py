@@ -19,6 +19,9 @@ class Card:
   def __mod__(self, other):
     return self.number % other
 
+  def __eq__(self, other):
+    return self.number == other.number and self.color == other.color
+
   def __lt__(self, card: object):
     number_is_smaller = self.number < card.number
     color_is_smaller = self.color < card.color

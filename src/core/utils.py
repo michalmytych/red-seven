@@ -17,7 +17,8 @@ def generate_shuffled_deck() -> list:
   return cards
 
 
-def get_card_by_color_and_number(deck: list, number: int, color_name: str) -> Card:
-  card_filter = lambda card: card.color.name == color_name and card.number == number
-  found = list(filter(card_filter, deck))
-  return found[0]
+def card(number: int, color_name: str):
+  color_config = list(filter(lambda c: c[1] == color_name, COLORS))[0]
+  color = Color(*color_config)
+  card = Card(number, color)
+  return card
