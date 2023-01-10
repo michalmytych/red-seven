@@ -1,5 +1,16 @@
-from collections import Counter
 import core.helpers as helpers
+
+
+def max_score_rule(players: list, method):
+  players_scores = [
+    {"player": player, "score": method(player)} 
+    for player in players
+  ]
+  unique_scores_count = set([ps["score"] for ps in players_scores])
+  if len(unique_scores_count) == 1:
+    return None
+  max_score = max(players_scores, key=lambda ps: ps["score"])
+  return max_score.get("player")
 
 
 def highest_card_wins(players: list):  
@@ -11,62 +22,42 @@ def highest_card_wins(players: list):
  
 
 def most_of_one_number_wins(players: list):
-  players_cards_numbers = []
-  for player in players:
-    cards = [card.number for card in player.palette.cards]
-    player_with_cards = {"cards": cards, "player_id": player.id}
-    players_cards_numbers.append(player_with_cards)
-  counts = []
-  for player_with_cards in players_cards_numbers:
-    counts_dict = {
-      "counts": helpers.get_items_count_dict(player_with_cards["cards"]),
-      "player_id": player_with_cards["player_id"]
-    }
-    counts.append(counts_dict)
-  max_counts = list(map(lambda pc: max(list(pc["counts"].values())), counts))
-  draw = helpers.all_in_list_same(max_counts)
-  if draw:
-    return None
-  max_count = max(counts, key = lambda pc: max(list(pc["counts"].values())))
-  winners = list(filter(lambda p: p.id == max_count["player_id"], players))
-  return winners[0]
+  return max_score_rule(
+    players,
+    lambda player: player.palette.get_one_number_cards_number()
+  )
 
 
 def most_of_one_color_wins(players: list):
-  get_player_cards_colors = lambda player: [card.color.strength for card in player.palette.cards]
-  players_colors_counts = []
-  for player in players:
-    player_colors = get_player_cards_colors(player)
-    players_colors_counts.append({
-      "player_id": player.id,
-      "counts": helpers.get_items_count_dict(player_colors)
-    })
-  maxes = lambda pcc: {"player_id": pcc["player_id"], "max": max(list(pcc["counts"].values()))} 
-  max_counts_players = [maxes(pcc) for pcc in players_colors_counts]  
-  max_counts = [mcp["max"] for mcp in max_counts_players]
-  draw = helpers.all_in_list_same(max_counts)
-  if draw:
-    return None
-  get_count_of_unique_cards = lambda player: len(set(get_player_cards_colors(player)))
-  return min(players, key = lambda player: get_count_of_unique_cards(player))
+  return max_score_rule(
+    players,
+    lambda player: player.palette.get_one_color_cards_number()
+  )
 
 
 def most_even_cards_wins(players: list):
-  get_player_even_cards = lambda player: [card for card in player.palette.cards if card % 2 == 0]
-  return max(players, key = lambda player: len(get_player_even_cards(player)))
+  return max_score_rule(
+    players,
+    lambda player: player.palette.get_even_cards_number()
+  )
 
 
 def most_different_colors_win(players: list):
-  get_player_cards_colors = lambda player: [card.color.strength for card in player.palette]
-  get_count_of_unique_cards = lambda player: len(set(get_player_cards_colors(player)))
-  return max(players, key = lambda player: get_count_of_unique_cards(player))
+  return max_score_rule(
+    players,
+    lambda player: player.palette.get_different_colors_card_number()
+  )
 
 
 def most_cards_below_4_wins(players: list):
-  get_player_cards_blow_4 = lambda player: [card.number for card in player.palette if card.number < 4]
-  get_count_of_below_4_cards = lambda player: len(get_player_cards_blow_4(player))
-  return min(players, key = lambda player: get_count_of_below_4_cards(player))
+  return max_score_rule(
+    players,
+    lambda player: player.palette.get_less_then_4_cards_number()
+  )
 
 
-def most_cards_in_a_row_wins():
-  return "NOT IMPLEMENTED"
+def most_cards_in_a_row_wins(players: list):
+  return max_score_rule(
+    players,
+    lambda player: player.palette.get_largest_order_of_cards()
+  )
