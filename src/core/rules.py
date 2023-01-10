@@ -1,3 +1,4 @@
+from collections import Counter
 import core.helpers as helpers
 
 
@@ -12,7 +13,7 @@ def highest_card_wins(players: list):
 def most_of_one_number_wins(players: list):
   players_cards_numbers = []
   for player in players:
-    cards = [card.number for card in player.palette]
+    cards = [card.number for card in player.palette.cards]
     player_with_cards = {"cards": cards, "player_id": player.id}
     players_cards_numbers.append(player_with_cards)
   counts = []
@@ -32,7 +33,7 @@ def most_of_one_number_wins(players: list):
 
 
 def most_of_one_color_wins(players: list):
-  get_player_cards_colors = lambda player: [card.color.strength for card in player.palette]
+  get_player_cards_colors = lambda player: [card.color.strength for card in player.palette.cards]
   players_colors_counts = []
   for player in players:
     player_colors = get_player_cards_colors(player)
@@ -51,7 +52,7 @@ def most_of_one_color_wins(players: list):
 
 
 def most_even_cards_wins(players: list):
-  get_player_even_cards = lambda player: [card for card in player.palette if card % 2 == 0]
+  get_player_even_cards = lambda player: [card for card in player.palette.cards if card % 2 == 0]
   return max(players, key = lambda player: len(get_player_even_cards(player)))
 
 

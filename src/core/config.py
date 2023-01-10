@@ -12,3 +12,5 @@ COLORS = (
   [5, "orange", rules.most_of_one_number_wins],
   [6, "red", rules.highest_card_wins]
 )
+
+CARDS_NUMBERS = [1, 2, 3, 4, 5, 6, 7]
