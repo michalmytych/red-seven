@@ -1,3 +1,4 @@
+from uuid import uuid4
 from Canvas import Canvas
 from Deck import Deck
 from Player import Player
@@ -6,10 +7,12 @@ from Player import Player
 class Game:
 
     def __init__(self, number_of_players):
+        self.id = uuid4()
         self.players = [Player() for _ in range(number_of_players)]
         self.deck = Deck()
         self.canvas = Canvas()
         self.player_counter = 0
+        # po stworzeniu obiektu gry dane powinny zostać rozesłane do graczy
 
     def deal_cards(self):
         for player in self.players:
@@ -45,21 +48,25 @@ class Game:
 
     def run_lap(self):
         self.deal_cards()
+        # wyslanie kart do graczy
         self.player_counter = self.check_winner() + 1
         self.check_player_counter()
         while True:
-            if len(self.players[self.player_counter].hand.cards) < 1:
-                self.players[self.player_counter].active = False
-            if self.players[self.player_counter].active:
-                self.players[self.player_counter].run_turn(
+            current_player = self.players[self.player_counter]
+            if len(current_player.hand.cards) < 1:
+                current_player.active = False
+            if current_player.active:
+                # przerwa na zagranie kolejki gracza
+                current_player.run_turn(
                     self,
                     self.player_counter,
                     self.canvas
                 )
             if self.check_winner() != self.player_counter:
-                self.players[self.player_counter].active = False
+                current_player.active = False
             winner = self.check_active_players()
             if winner:
+                # wysłanie informacji o zakończonej rundzie
                 print(f'Lap ends, winner is: {winner} player')
                 break
             self.player_counter += 1
