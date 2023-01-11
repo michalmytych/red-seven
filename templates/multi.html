@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Game ID: {{ game.id }}</h1>
+<h3>Player ID: {{ player.id }}</h3>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='multi.js') }}"></script>
+{% endblock %}

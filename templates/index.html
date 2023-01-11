@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <h1>RedSeven</h1>
+    <input type="text" id="gameIdInput">
+    <button disabled type="button" id="startGameButton">Graj!</button>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const slugify = text =>
+  text
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-');
+  const gameIdInput = document.getElementById("gameIdInput");
+  const startGameButton = document.getElementById("startGameButton");
+  console.log('adawd')
+  window.onload = function() {
+    gameIdInput.addEventListener("input", function() {
+      console.log(gameIdInput.value)
+      if (!gameIdInput.value) {
+        startGameButton.disabled = true;
+      } else {
+        startGameButton.disabled = false;
+      }
+    });
+
+    startGameButton.addEventListener("click", function() {
+      const gameId = slugify(gameIdInput.value);
+      const uri = `/multiplayer/${gameId}`;
+      window.location = uri;
+    });
+  }
+  
+</script>
+{% endblock %}
