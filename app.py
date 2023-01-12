@@ -27,9 +27,14 @@ def multiplayer(game_id):
     global games
     game = games.get(game_id)
     if not game:
-      game = Game(2)
+      game = Game(2, game_id)
       games[game_id] = game  
     player = game.assign_player()
     if not player:
       return render_template('game-busy.html')
     return render_template('multi.html', game=game, player=player)
+
+
+@socket.on("hello", namespace="/socket")
+def hello(msg):
+  print(msg)

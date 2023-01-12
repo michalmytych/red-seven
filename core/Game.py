@@ -1,4 +1,3 @@
-from uuid import uuid4
 from core.Canvas import Canvas
 from core.Deck import Deck
 from core.Player import Player
@@ -6,22 +5,25 @@ from core.Player import Player
 
 class Game:
 
-    def __init__(self, number_of_players):
-        self.id = uuid4()
-        players = [Player() for _ in range(number_of_players)]
+    def __init__(self, number_of_players: int, game_id: str):
+        self.id = game_id
+        self.number_of_players = number_of_players
+        players = {}
         self.players = players
-        self.unassigned_players = players
         self.deck = Deck()
         self.canvas = Canvas()
         self.player_counter = 0
+        print(f'Initialized Game {game_id}')
         # po stworzeniu obiektu gry dane powinny zostać rozesłane do graczy
 
     def __repr__(self):
         return f'Game of id {self.id}'
 
     def assign_player(self):
-      if len(self.unassigned_players) > 0:
-        return self.unassigned_players.pop()
+      if len(self.players) < self.number_of_players:
+        new_player = Player()
+        self.players[new_player.id] = new_player
+        return new_player
       else:
         return None
 

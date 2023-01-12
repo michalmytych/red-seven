@@ -8,5 +8,8 @@
 {% endblock %}
 
 {% block scripts %}
+    <script>
+      const __playerId = "{{ player.id }}";
+    </script>
     <script src="{{ url_for('static', filename='multi.js') }}"></script>
 {% endblock %}

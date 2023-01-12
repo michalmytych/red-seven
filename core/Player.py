@@ -6,10 +6,15 @@ from core.Palette import Palette
 class Player:
 
     def __init__(self):
-        self.id = uuid4()
+        id = uuid4()
+        self.id = id
         self.hand = Hand()
         self.palette = Palette()
         self.active = True
+        print(f'Initalized Player {id}')
+
+    def __repr__(self):
+        return f'Player[id={self.id}]'
 
     def set_card_to_canvas(self, index, canvas):
         self.hand.set_card_to_canvas(index, canvas)
