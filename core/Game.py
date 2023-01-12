@@ -16,6 +16,15 @@ class Game:
         print(f'Initialized Game {game_id}')
         # po stworzeniu obiektu gry dane powinny zostać rozesłane do graczy
 
+    def serialize(self):
+      return {
+        "id": self.id,
+        "number_of_players": self.number_of_players,
+        "deck": self.deck.serialize(),
+        "canvas": self.canvas.serialize(),
+        "player_counter": self.player_counter
+      }
+
     def __repr__(self):
         return f'Game of id {self.id}'
 

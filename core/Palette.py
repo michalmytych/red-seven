@@ -7,6 +7,11 @@ class Palette:
     def __init__(self):
         self.cards = []
 
+    def serialize(self):
+      return {
+        "cards": [card.serialize() for card in self.cards],
+      }
+
     def __str__(self):
         return_string = ''
         for card in self.cards:

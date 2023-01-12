@@ -16,6 +16,11 @@ class Canvas:
     def __init__(self):
         self.card = Card(6, 'START')
 
+    def serialize(self):
+      return {
+        "card": self.card.serialize()
+      }
+
     @staticmethod
     def get_winner_by_red_rule(palettes):
         largest_cards = {palette[0]: palette[1].cards[0] for palette in palettes.items()}

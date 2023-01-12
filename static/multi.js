@@ -2,7 +2,11 @@ const namespace = '/socket';
 const socket = io(namespace);
 
 const signal = (e, data) => {
-  socket.emit(e, {player_id: __playerId, data: data});
+  socket.emit(e, {
+    player_id: PLAYER_ID, 
+    game_id: GAME_ID, 
+    data: data
+  });
 }
 
 socket.on('test', function(msg) {
@@ -10,5 +14,5 @@ socket.on('test', function(msg) {
 })
 
 window.onload = function() {
-  signal("hello", {counter: 12});
+  signal("joined");
 }

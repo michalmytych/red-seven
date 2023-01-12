@@ -15,6 +15,12 @@ class Card:
         self.color = color
         self.value = value
 
+    def serialize(self):
+      return {
+        "color": self.color,
+        "value": self.value,
+      }
+
     def __str__(self):
         from Canvas import Canvas
         return f'{Card.DICT_OF_COLORS[self.color]} {self.value} Rule: {Canvas.RULES[self.color]}'

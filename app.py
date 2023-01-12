@@ -34,8 +34,16 @@ def multiplayer(game_id):
       return render_template('game-busy.html')
     return render_template('multi.html', game=game, player=player)
 
+def get_game_and_player(msg):
+  global games
+  player_id = msg.get('player_id')
+  game_id = msg.get('game_id')
+  game = games[game_id]
+  player = game.players[player_id]
+  return game, player
 
-@socket.on("hello", namespace="/socket")
-def hello(msg):
-  print(msg)
-  emit("test", {"counter": msg['data']['counter']})
+@socket.on("joined", namespace="/socket")
+def joined(msg):
+  game, player = get_game_and_player(msg)
+  
+  emit("test", {"player": player.serialize(), "game": game.serialize()})

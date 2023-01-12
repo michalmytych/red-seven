@@ -9,7 +9,8 @@
 
 {% block scripts %}
     <script>
-      const __playerId = "{{ player.id }}";
+      const PLAYER_ID = "{{ player.id }}";
+      const GAME_ID = "{{ game.id }}";
     </script>
     <script src="{{ url_for('static', filename='multi.js') }}"></script>
 {% endblock %}

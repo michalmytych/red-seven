@@ -9,6 +9,11 @@ class Deck:
         self.create_new_deck()
         self.shuffle_deck()
 
+    def serialize(self):
+      return {
+        "cards": [card.serialize() for card in self.cards]
+      }
+
     def create_new_deck(self):
         for color in Card.DICT_OF_COLORS.keys():
             for value in Card.LIST_OF_VALUES:

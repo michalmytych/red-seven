@@ -6,12 +6,20 @@ from core.Palette import Palette
 class Player:
 
     def __init__(self):
-        id = uuid4()
+        id = str(uuid4())
         self.id = id
         self.hand = Hand()
         self.palette = Palette()
         self.active = True
         print(f'Initalized Player {id}')
+
+    def serialize(self):
+      return {
+        "id": self.id,
+        "hand": self.hand.serialize(),
+        "palette": self.palette.serialize(),
+        "active": self.active
+      }
 
     def __repr__(self):
         return f'Player[id={self.id}]'
@@ -48,3 +56,4 @@ class Player:
             card_number = input('Select number of card you want to set to palette: ')
             self.set_card_to_palette(int(card_number)-1)
             self.display_player_desk(game, player_number)
+
