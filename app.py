@@ -58,3 +58,9 @@ def play_to_canvas(msg):
   player.set_card_to_canvas(msg['data']['index'], game.canvas)
   emit("state", {"player": player.serialize(), "game": game.serialize()})
 
+@socket.on("play_to_palette", namespace="/socket")
+def play_to_palette(msg):
+  game, player = get_game_and_player(msg)
+  player.set_card_to_palette(msg['data']['index'])
+  emit("state", {"player": player.serialize(), "game": game.serialize()})
+
