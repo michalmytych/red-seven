@@ -38,3 +38,4 @@ def multiplayer(game_id):
 @socket.on("hello", namespace="/socket")
 def hello(msg):
   print(msg)
+  emit("test", {"counter": msg['data']['counter']})
