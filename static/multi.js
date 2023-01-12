@@ -39,7 +39,7 @@ const updateUI = (msg) => {
 
   deck.innerHTML = ''
   msg.game.deck.cards.map(card => {
-    const cardElement = createCard(card.color, card.value) // hidden = true
+    const cardElement = createCard(card.color, card.value, true) // hidden = true
     deck.appendChild(cardElement)
   })
 
@@ -61,7 +61,7 @@ const updateUI = (msg) => {
   canvas.appendChild(canvasCardElement)
 } 
 
-socket.on('test', function(msg) {
+socket.on('state', function(msg) {
   updateUI(msg)
   console.log(msg);
 })

@@ -8,8 +8,7 @@ class Game:
     def __init__(self, number_of_players: int, game_id: str):
         self.id = game_id
         self.number_of_players = number_of_players
-        players = {}
-        self.players = players
+        self.players = []
         self.deck = Deck()
         self.canvas = Canvas()
         self.player_counter = 0
@@ -22,7 +21,8 @@ class Game:
         "number_of_players": self.number_of_players,
         "deck": self.deck.serialize(),
         "canvas": self.canvas.serialize(),
-        "player_counter": self.player_counter
+        "player_counter": self.player_counter,
+        "players_ids": [player.id for player in self.players]
       }
 
     def __repr__(self):
@@ -31,7 +31,9 @@ class Game:
     def assign_player(self):
       if len(self.players) < self.number_of_players:
         new_player = Player()
-        self.players[new_player.id] = new_player
+        index = len(self.players)
+        new_player.id = index
+        self.players.append(new_player)
         return new_player
       else:
         return None

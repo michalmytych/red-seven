@@ -2,6 +2,7 @@ from threading import Lock
 from flask import Flask, session, render_template
 from flask_socketio import SocketIO, emit
 from core.Game import Game
+from time import sleep
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SECRET'
@@ -36,7 +37,7 @@ def multiplayer(game_id):
 
 def get_game_and_player(msg):
   global games
-  player_id = msg.get('player_id')
+  player_id = int(msg.get('player_id'))
   game_id = msg.get('game_id')
   game = games[game_id]
   player = game.players[player_id]
@@ -45,5 +46,15 @@ def get_game_and_player(msg):
 @socket.on("joined", namespace="/socket")
 def joined(msg):
   game, player = get_game_and_player(msg)
-  
-  emit("test", {"player": player.serialize(), "game": game.serialize()})
+  emit("state", {"player": player.serialize(), "game": game.serialize()})
+  if len(game.players) == game.number_of_players:
+    game.deal_cards()
+    sleep(3)
+    emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)    
+
+@socket.on("play_to_canvas", namespace="/socket")
+def play_to_canvas(msg):
+  game, player = get_game_and_player(msg)
+  player.set_card_to_canvas(msg['data']['index'], game.canvas)
+  emit("state", {"player": player.serialize(), "game": game.serialize()})
+

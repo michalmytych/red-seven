@@ -1,4 +1,4 @@
-from uuid import uuid4
+
 from core.Hand import Hand
 from core.Palette import Palette
 
@@ -6,8 +6,7 @@ from core.Palette import Palette
 class Player:
 
     def __init__(self):
-        id = str(uuid4())
-        self.id = id
+        self.id = None
         self.hand = Hand()
         self.palette = Palette()
         self.active = True
