@@ -6,13 +6,13 @@ class Card:
         4: 'YELLOW',
         3: 'GREEN',
         2: 'LIGHTBLUE',
-        1: 'DEEP_BLUE',
+        1: 'INDIGO',
         0: 'VIOLET'
     }
     LIST_OF_VALUES = [1, 2, 3, 4, 5, 6, 7]
 
     def __init__(self, color, value):
-        self.color = color
+        self.color = Card.DICT_OF_COLORS[color]
         self.value = value
 
     def serialize(self):

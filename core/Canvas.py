@@ -14,7 +14,7 @@ class Canvas:
     }
 
     def __init__(self):
-        self.card = Card(6, 'START')
+        self.card = Card(6, 'S')
 
     def serialize(self):
       return {
