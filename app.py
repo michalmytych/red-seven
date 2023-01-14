@@ -51,6 +51,9 @@ def joined(msg):
     game.deal_cards()
     sleep(3)
     emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)    
+    another_player_id = 0 if player.id == 1 else 1
+    game, player = get_game_and_player({"player_id": another_player_id, "game_id": game.id})
+    emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)
 
 @socket.on("play_to_canvas", namespace="/socket")
 def play_to_canvas(msg):
