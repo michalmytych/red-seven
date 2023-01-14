@@ -51,6 +51,10 @@ const createCard = (color, value, hidden = false, draggable = false) => {
   card.style.height = '35px';
   card.style.borderRadius = '3px';
   card.style.backgroundColor = !hidden ? color.toLowerCase() : 'grey';
+  const colorsWithBlackText = ['yellow', 'lightblue'];
+  if (!hidden && colorsWithBlackText.includes(color.toLowerCase())) {
+    card.style.color = 'black';
+  }
   card.innerText = !hidden ? value : '';
   return card;
 }

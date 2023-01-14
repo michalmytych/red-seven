@@ -35,6 +35,7 @@ def multiplayer(game_id):
       return render_template('game-busy.html')
     return render_template('multi.html', game=game, player=player)
 
+
 def get_game_and_player(msg):
   global games
   player_id = int(msg.get('player_id'))
@@ -43,27 +44,43 @@ def get_game_and_player(msg):
   player = game.players[player_id]
   return game, player
 
+
+def get_another_player_and_game(player, game):
+  another_player_id = 0 if player.id == 1 else 1
+  game, player = get_game_and_player({"player_id": another_player_id, "game_id": game.id})
+  return game, player
+
+
 @socket.on("joined", namespace="/socket")
 def joined(msg):
   game, player = get_game_and_player(msg)
   emit("state", {"player": player.serialize(), "game": game.serialize()})
+  
   if len(game.players) == game.number_of_players:
     game.deal_cards()
     sleep(3)
+
     emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)    
-    another_player_id = 0 if player.id == 1 else 1
-    game, player = get_game_and_player({"player_id": another_player_id, "game_id": game.id})
+    game, player = get_another_player_and_game(player, game)
     emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)
+
 
 @socket.on("play_to_canvas", namespace="/socket")
 def play_to_canvas(msg):
   game, player = get_game_and_player(msg)
   player.set_card_to_canvas(msg['data']['index'], game.canvas)
-  emit("state", {"player": player.serialize(), "game": game.serialize()})
+
+  emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)    
+  game, player = get_another_player_and_game(player, game)
+  emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)
+
 
 @socket.on("play_to_palette", namespace="/socket")
 def play_to_palette(msg):
   game, player = get_game_and_player(msg)
   player.set_card_to_palette(msg['data']['index'])
-  emit("state", {"player": player.serialize(), "game": game.serialize()})
+
+  emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)    
+  game, player = get_another_player_and_game(player, game)
+  emit("state", {"player": player.serialize(), "game": game.serialize()}, broadcast=True)
 

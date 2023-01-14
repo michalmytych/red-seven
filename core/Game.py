@@ -12,8 +12,8 @@ class Game:
         self.deck = Deck()
         self.canvas = Canvas()
         self.player_counter = 0
-        print(f'Initialized Game {game_id}')
-        # po stworzeniu obiektu gry dane powinny zostać rozesłane do graczy
+        self.current_player = None
+        self.waiting_for_player_action = False
 
     def serialize(self):
       return {
@@ -22,7 +22,8 @@ class Game:
         "deck": self.deck.serialize(),
         "canvas": self.canvas.serialize(),
         "player_counter": self.player_counter,
-        "players_ids": [player.id for player in self.players]
+        "players_ids": [player.id for player in self.players],
+        "current_player_id": getattr(self.current_player, 'id', None)
       }
 
     def __repr__(self):
@@ -72,22 +73,23 @@ class Game:
 
     def run_lap(self):
         self.deal_cards()
-        # wyslanie kart do graczy
+        # wyslanie kart do graczy - DONE
         self.player_counter = self.check_winner() + 1
         self.check_player_counter()
+        self.waiting_for_player_action = True
         while True:
-            current_player = self.players[self.player_counter]
-            if len(current_player.hand.cards) < 1:
-                current_player.active = False
-            if current_player.active:
+            self.current_player = self.players[self.player_counter]            
+            if len(self.current_player.hand.cards) < 1:
+                self.current_player.active = False
+            if self.current_player.active:
                 # przerwa na zagranie kolejki gracza
-                current_player.run_turn(
+                self.current_player.run_turn(
                     self,
                     self.player_counter,
                     self.canvas
                 )
             if self.check_winner() != self.player_counter:
-                current_player.active = False
+                self.current_player.active = False
             winner = self.check_active_players()
             if winner:
                 # wysłanie informacji o zakończonej rundzie
